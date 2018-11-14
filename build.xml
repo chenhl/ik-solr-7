@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="ik-source">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../Program Files (x86)/jee/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+        <property name="classes.dir" value="bin" />
+
+    <property name="output.dir" value="out" />
+
+    <property name="jarname" value="ik-analyzer-solr-7.5.0.jar" />
+    
+    <path id="ik-source.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-analyzers-common-7.5.0-SNAPSHOT.jar"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-backward-codecs-7.5.0-SNAPSHOT.jar"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-core-7.5.0-SNAPSHOT.jar"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-memory-7.5.0-SNAPSHOT.jar"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-queries-7.5.0-SNAPSHOT.jar"/>
+        <pathelement location="F:/baby/solr-7.5.0/solr/server/solr-webapp/webapp/WEB-INF/lib/lucene-queryparser-7.5.0-SNAPSHOT.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="ik-source.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="LuceneIndexAndSearchDemo">
+        <java classname="org.wltea.analyzer.sample.LuceneIndexAndSearchDemo" failonerror="true" fork="yes">
+            <classpath refid="ik-source.classpath"/>
+        </java>
+    </target>
+    <target name="IKAnalzyerDemo">
+        <java classname="org.wltea.analyzer.sample.IKAnalzyerDemo" failonerror="true" fork="yes">
+            <classpath refid="ik-source.classpath"/>
+        </java>
+    </target>
+    <target name="jar">
+            <!-- jar文件的输出路径 -->
+        <jar destfile="${output.dir}/${jarname}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Class-Path" value="${mf.classpath}" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>
